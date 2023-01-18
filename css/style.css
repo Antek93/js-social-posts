@@ -124,3 +124,14 @@ h1 {
     cursor: pointer;
 }
 
+.boxing {
+    width: 36px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.likes__counter{
+    display: flex;
+}
+

@@ -32,6 +32,7 @@ console.log('HI, I am java and I am working fine');
 
 // <-----------------------------DATI------------------------------->
 
+
 const posts = [
     {
         "id": 1,
@@ -129,7 +130,7 @@ for (let index = 0; index < posts.length; index++) {
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${posts[index]['likes']}</b> persone
+                        Piace a <b id="like-counter-1" class="js-likes-counter boxing">${posts[index]['likes']}</b> persone
                     </div>
                 </div> 
             </div>            
@@ -168,17 +169,23 @@ for (let index = 0; index < likeBox.length; index++) {
         if (liked == false) {
 
             likeBox[index].classList.add("like-button--liked")
-            posts[index]['likes'] =  posts[index]['likes'] + 1;  
+            posts[index]['likes'] = (posts[index]['likes'] + 1);  
+            console.log('likes:', posts[index]['likes'])
+
             liked = true;
 
         } else {
 
             likeBox[index].classList.remove("like-button--liked")
+            posts[index]['likes'] = (posts[index]['likes'] - 1);  
+            console.log('likes:', posts[index]['likes'])
             liked = false;
-
-
         }
-        
+
+        let counter = document.getElementById('like-counter-1');
+        counter.innerHTML = `<div class="likes__counter">
+                                <b id="like-counter-1" class="js-likes-counter">${' ' + posts[index]['likes'] + ''}</b>
+                            </div>`
 
     });
 }
