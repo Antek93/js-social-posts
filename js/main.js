@@ -182,10 +182,18 @@ for (let index = 0; index < likeBox.length; index++) {
             liked = false;
         }
 
-        let counter = document.getElementById('like-counter-1');
-        counter.innerHTML = `<div class="likes__counter">
-                                <b id="like-counter-1" class="js-likes-counter">${' ' + posts[index]['likes'] + ''}</b>
-                            </div>`
-
+        
+           let counter = document.getElementById('like-counter-1');
+           //     counter.innerHTML = `<div class="post__likes-counter">${posts[index].likes}</div>`
+           counter.innerHTML = `<div class="post__likes-counter">${posts[index].likes}</div>`
     });
+
+
 }
+
+let totalLikes = 0;
+for (let index = 0; index < posts.length; index++) {
+    // code to create new div for post
+    totalLikes += posts[index].likes;
+}
+console.log(totalLikes);
