@@ -124,13 +124,13 @@ for (let index = 0; index < posts.length; index++) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a id="${posts[index]['id']}" class="like-button js-like-button" href="#" data-postid="1">
+                        <a class="like-button js-like-button" href="#" data-postid="${posts[index]['id']}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter boxing">${posts[index]['likes']}</b> persone
+                        Piace a <b id="like-counter-${posts[index]['id']}" class="js-likes-counter boxing">${posts[index]['likes']}</b> persone
                     </div>
                 </div> 
             </div>            
@@ -143,57 +143,53 @@ for (let index = 0; index < posts.length; index++) {
 
 // Milestone 3 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
 
-// Selezionati i box like tramite ID specifico
+const allLikeButtons = document.querySelectorAll('.js-like-button');
 
-let like_uno = document.getElementById('1');
-let like_due = document.getElementById('2');
-let like_tre = document.getElementById('3');
-let like_quattro = document.getElementById('4');
-let like_cinque = document.getElementById('5');
+const likedPosts = [];
 
-//Creato array dei like box
-
-let likeBox = [like_uno, like_due, like_tre, like_quattro, like_cinque];
+allLikeButtons.forEach((singleButton, i) => {
 
 
-// <-----------------------------SELEZIONATO BOTTONE NEL DOM------------------------------->
+    singleButton.addEventListener('click',
+    
+    function(event) {
 
-for (let index = 0; index < likeBox.length; index++) {
+        event.preventDefault();
 
-    // <-----------------------------CREATO EVENTO SUL CLICK------------------------------->
+        if(!this.classList.contains('like-button--liked')) {
 
-    let liked = false;
+                this.classList.add('like-button--liked');
 
-    likeBox[index].addEventListener("click", function() {
+                const postId = this.getAttribute('data-postid');
 
-        if (liked == false) {
+                const likesCounter = document.getElementById('like-counter-' + postId);
 
-            likeBox[index].classList.add("like-button--liked")
-            posts[index]['likes'] = (posts[index]['likes'] + 1);  
-            console.log('likes:', posts[index]['likes'])
+                // Incrementa il valore contenuto dentro likesCounter di 1
 
-            liked = true;
+                let likes = parseInt(likesCounter.innerText);
+                likes = likes + 1;
+                likesCounter.innerHTML = likes;
+                
+                likedPosts.push(postId);
 
         } else {
 
-            likeBox[index].classList.remove("like-button--liked")
-            posts[index]['likes'] = (posts[index]['likes'] - 1);  
-            console.log('likes:', posts[index]['likes'])
-            liked = false;
+
+        const postId = this.getAttribute('data-postid');
+
+        likedPosts.splice(likedPosts.indexOf(postId), 1);
+
+        const likesCounter = document.getElementById('like-counter-' + postId)
+        let likes = parseInt(likesCounter.innerText);
+        likes = likes - 1;
+        likesCounter.innerHTML = likes;
+
+        this.classList.remove('like-button--liked');
+
         }
-
-        
-           let counter = document.getElementById('like-counter-1');
-           //     counter.innerHTML = `<div class="post__likes-counter">${posts[index].likes}</div>`
-           counter.innerHTML = `<div class="post__likes-counter">${posts[index].likes}</div>`
     });
+        
+
+});
 
 
-}
-
-let totalLikes = 0;
-for (let index = 0; index < posts.length; index++) {
-    // code to create new div for post
-    totalLikes += posts[index].likes;
-}
-console.log(totalLikes);
